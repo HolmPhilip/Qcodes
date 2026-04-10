@@ -303,7 +303,7 @@ class KeysightE4980A(VisaInstrument):
         self.auto_level_control: Parameter = self.add_parameter(
             "auto_level_control",
             get_cmd=":AMPLitude:ALC?",
-            set_cmd="::AMPLitude:ALC {}",
+            set_cmd=lambda x :f":AMPLitude:ALC {x}",
             val_mapping=create_on_off_val_mapping(on_val="1", off_val="0"),
             docstring="Enables or disable automatic level control (ALC)",
         )

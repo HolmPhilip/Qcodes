@@ -300,6 +300,15 @@ class KeysightE4980A(VisaInstrument):
         )
         """Gets and sets the AC bias voltage level for measurement signal."""
 
+        self.auto_level_control: Parameter = self.add_parameter(
+            "auto_level_control",
+            get_cmd=":AMPLitude:ALC?",
+            set_cmd="::AMPLitude:ALC {}",
+            val_mapping=create_on_off_val_mapping(on_val="1", off_val="0"),
+            docstring="Enables or disable automatic level control (ALC)",
+        )
+        """Enables or disable ALC"""
+
         self.measurement_function: Parameter = self.add_parameter(
             "measurement_function",
             get_cmd=":FUNCtion:IMPedance?",

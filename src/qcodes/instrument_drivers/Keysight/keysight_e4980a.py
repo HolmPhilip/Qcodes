@@ -416,6 +416,7 @@ class KeysightE4980A(VisaInstrument):
             unit="A",
             get_parser=float,
             docstring="Returns the latest measured data for the DC current monitor. If the current-level monitor is set to OFF, 0.0 is returned. (Query Only)"
+        )
 
         self.ac_voltage : Parameter = self.add_parameter(
             "ac_voltage",
@@ -423,6 +424,7 @@ class KeysightE4980A(VisaInstrument):
             unit="V",
             get_parser=float,
             docstring = "Returns the latest measured data for the AC voltage monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only)"
+        )
 
         self.dc_voltage : Parameter = self.add_parameter(
             "dc_voltage",

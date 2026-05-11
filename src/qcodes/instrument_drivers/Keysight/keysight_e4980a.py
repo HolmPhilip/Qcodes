@@ -403,6 +403,35 @@ class KeysightE4980A(VisaInstrument):
         )
         """This parameter tracks the signal mode which is being set."""
 
+        self.ac_current : Parameter = self.add_parameter(
+            "ac_current",
+            get_cmd=":FETCh:SMONitor:IAC?",
+            unit="A",
+            get_parser=float,
+            docstring="Returns the latest measured data for the AC current monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only)")
+        
+        self.dc_current : Parameter = self.add_parameter(
+            "dc_current",
+            get_cmd=":FETCh:SMONitor:IDC?",
+            unit="A",
+            get_parser=float,
+            docstring="Returns the latest measured data for the DC current monitor. If the current-level monitor is set to OFF, 0.0 is returned. (Query Only)"
+
+        self.ac_voltage : Parameter = self.add_parameter(
+            "ac_voltage",
+            get_cmd=":FETCh:SMONitor:VAC?",
+            unit="V",
+            get_parser=float,
+            docstring = "Returns the latest measured data for the AC voltage monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only)"
+
+        self.dc_voltage : Parameter = self.add_parameter(
+            "dc_voltage",
+            get_cmd=":FETCh:SMONitor:VDC?",
+            unit="V",
+            get_parser=float,
+            docstring="Returns the latest measured data for the DC voltage monitor. If the voltage-level monitor is set to OFF, 0.0 is returned. (Query Only)"
+        )
+
         self.correction: KeysightE4980ACorrection = self.add_submodule(
             "correction", KeysightE4980ACorrection(self, "correction")
         )

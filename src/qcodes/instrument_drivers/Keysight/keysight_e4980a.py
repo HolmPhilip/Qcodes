@@ -303,11 +303,11 @@ class KeysightE4980A(VisaInstrument):
         self.auto_level_control: Parameter = self.add_parameter(
             "auto_level_control",
             get_cmd=":AMPLitude:ALC?",
-            set_cmd=lambda x :self.write(f":AMPLitude:ALC {x}"),
+            set_cmd=":AMPLitude:ALC {}",
             val_mapping=create_on_off_val_mapping(on_val="1", off_val="0"),
-            docstring="Enables or disable automatic level control (ALC)",
+            docstring="Enables the Automatic Level Control (ALC). [Keysight E4980A/AL Precision LCR Meter p.325]",
         )
-        """Enables or disable ALC"""
+        """"Enables the Automatic Level Control (ALC). [Keysight E4980A/AL Precision LCR Meter p.325]"""
 
         self.measurement_function: Parameter = self.add_parameter(
             "measurement_function",
@@ -408,14 +408,16 @@ class KeysightE4980A(VisaInstrument):
             get_cmd=":FETCh:SMONitor:IAC?",
             unit="A",
             get_parser=float,
-            docstring="Returns the latest measured data for the AC current monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only)")
+            docstring="Returns the latest measured data for the AC current monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only) [Keysight E4980A/AL Precision LCR Meter p.347]"
+            )
+        "Returns the latest measured data for the AC current monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only) [Keysight E4980A/AL Precision LCR Meter p.347]"
         
         self.dc_current : Parameter = self.add_parameter(
             "dc_current",
             get_cmd=":FETCh:SMONitor:IDC?",
             unit="A",
             get_parser=float,
-            docstring="Returns the latest measured data for the DC current monitor. If the current-level monitor is set to OFF, 0.0 is returned. (Query Only)"
+            docstring="Returns the latest measured data for the DC current monitor. If the current-level monitor is set to OFF, 0.0 is returned. (Query Only) [Keysight E4980A/AL Precision LCR Meter p.347]"
         )
 
         self.ac_voltage : Parameter = self.add_parameter(
@@ -423,16 +425,38 @@ class KeysightE4980A(VisaInstrument):
             get_cmd=":FETCh:SMONitor:VAC?",
             unit="V",
             get_parser=float,
-            docstring = "Returns the latest measured data for the AC voltage monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only)"
+            docstring = "Returns the latest measured data for the AC voltage monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only) [Keysight E4980A/AL Precision LCR Meter p.347]"
         )
+        "Returns the latest measured data for the AC voltage monitor. In case of Vdc-Idc measurement, 0 is returned. (Query Only) [Keysight E4980A/AL Precision LCR Meter p.347]"
+       
 
         self.dc_voltage : Parameter = self.add_parameter(
             "dc_voltage",
             get_cmd=":FETCh:SMONitor:VDC?",
             unit="V",
             get_parser=float,
-            docstring="Returns the latest measured data for the DC voltage monitor. If the voltage-level monitor is set to OFF, 0.0 is returned. (Query Only)"
+            docstring="Returns the latest measured data for the DC voltage monitor. If the voltage-level monitor is set to OFF, 0.0 is returned. (Query Only) [Keysight E4980A/AL Precision LCR Meter p.347]"
         )
+        "Returns the latest measured data for the DC voltage monitor. If the voltage-level monitor is set to OFF, 0.0 is returned. (Query Only) [Keysight E4980A/AL Precision LCR Meter p.347]"
+        
+        self.v_dc_monitor: Parameter = self.add_parameter(
+            "v_dc_monitor",
+            get_cmd=":FUNCtion:SMONitor:VDC[:STATe]?",
+            set_cmd=":FUNCtion:SMONitor:VDC:STATe {}",
+            val_mapping=create_on_off_val_mapping(on_val="1", off_val="0"),
+            docstring = "Enables the DC voltage-level monitor function. [Keysight E4980A/AL Precision LCR Meter p.355]"
+        )
+        "Enables the DC voltage-level monitor function. [Keysight E4980A/AL Precision LCR Meter p.355]"
+
+        self.i_dc_monitor: Parameter = self.add_parameter(
+            "i_dc_monitor",
+            get_cmd=":FUNCtion:SMONitor:IDC[:STATe]?",
+            set_cmd=":FUNCtion:SMONitor:IDC:STATe {}",
+            val_mapping=create_on_off_val_mapping(on_val="1", off_val="0"),
+            docstring="Enables the DC current-level monitor function. [Keysight E4980A/AL Precision LCR Meter p.354]"
+        )
+        "Enables the DC current-level monitor function. [Keysight E4980A/AL Precision LCR Meter p.354]"
+
 
         self.correction: KeysightE4980ACorrection = self.add_submodule(
             "correction", KeysightE4980ACorrection(self, "correction")
